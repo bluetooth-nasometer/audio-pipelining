@@ -7,7 +7,9 @@ import time
 def list_devices():
     """List all available audio input devices"""
     print("Available Audio Devices:")
-    print(sd.query_devices())
+    print(sd.query_devices(), '\n\n')
+    # for i, d in enumerate(sd.query_devices()):
+    #     print(f"{i}: {d}")
 
 def record_from_single_mic(mic_idx, duration, sample_rate, recordings):
     """Record from a single microphone"""
@@ -26,13 +28,20 @@ def record_from_mics(duration=5, sample_rate=44100):
     list_devices()
     
     devices = sd.query_devices()
-    jabra_mics = [i for i, d in enumerate(devices) if 'jabra elite active 65t' in d['name'].lower()]
+    is_input_device = lambda d: d['max_input_channels'] > 0 and 'jabra elite active 65t' in d['name'].lower()
+    jabra_mics = [i for i, d in enumerate(devices) if is_input_device(d)]
+
+    is_normal_mic = lambda d: d['max_input_channels'] > 0 and 'realtek high' in d['name'].lower()
+    normal_mics = [i for i, d in enumerate(devices) if is_normal_mic(d)]
+
+    jabra_mics.extend(normal_mics)
     
     if not jabra_mics:
         print("No Jabra microphones detected!")
         return
     
     print(f"Found {len(jabra_mics)} Jabra microphones")
+    print(f"Found {len(normal_mics)} normal microphones")
     
     # Dictionary to store recordings
     recordings = {}
