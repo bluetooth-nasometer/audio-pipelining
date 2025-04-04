@@ -99,12 +99,16 @@ class AudioRecorder:
         """Clear all stored recordings"""
         self.recordings.clear()
 
-if __name__ == "__main__":
-    recorder = AudioRecorder(sample_rate=44100)
-    recorder.list_devices()
+# if __name__ == "__main__":
+#     recorder = AudioRecorder(sample_rate=44100)
+#     recorder.list_devices()
+
+#     a = input("Pick mic1")
+#     b = input("Pick mic2")
     
-    recorder.start_recording(mic_indices=[0, 1])
-    time.sleep(5)
-    recorder.stop_recording()
-    recorder.save_recordings()
-    recorder.clear_recordings()
+#     recorder.start_recording(mic_indices=[a, b])
+#     time.sleep(5)
+#     recorder.stop_recording()
+#     recorder.save_recordings()
+#     recorder.clear_recordings()
+
